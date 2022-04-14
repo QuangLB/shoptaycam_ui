@@ -2,20 +2,20 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
 import { useState,useEffect  } from "react";
 import axios from "axios";
-export default function Users(props) {
+export default function Priduct(props) {
   const [items, setItems] = useState([]);
   const remove = async (id) => {
       console.log(id);
       try {
         axios.delete(
-          "http://localhost:8080/api/users/" + id
+          "http://localhost:8080/api/product/" + id
         );
         alert("Remove success!" + id);
 
         window.location.reload(true);
       } catch (error) {}
     };
-    useEffect(() => {axios.get('http://localhost:8080/api/users').then(resp => {
+    useEffect(() => {axios.get('http://localhost:8080/api/product').then(resp => {
       setItems(resp.data);
   })}, []);
   
@@ -27,9 +27,11 @@ export default function Users(props) {
       <thead>
         <tr>
         <th></th>
-          <th >Username</th>
-          <th >Fullname</th>
-          <th >Role</th>
+          <th >ID</th>
+          <th >Name</th>
+          <th >Price</th>
+          <th >Create Date</th>
+          <th >Brand</th>
           <th >Remove</th>
           <th >Edit</th>
         </tr>
@@ -38,12 +40,18 @@ export default function Users(props) {
         {items.map((items) => (        
             <tr table-active key={items.id}>
                 <td></td>
-              <td>{items.username}</td>
+              <td>{items.id}</td>
               <td>
-                {items.fullname}
+                {items.name}
               </td>
               <td>
-                {items.role === true ? "Admin" : "User"} 
+                {items.price}
+              </td>
+              <td>
+                {items.createDate}
+              </td>
+              <td>
+                {items.brand.name}
               </td>
               <td>
                 <button className="btn btn-outline-danger" onClick={() =>remove(items.username)}>
