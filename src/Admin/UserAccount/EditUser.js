@@ -1,76 +1,74 @@
+import { useParams  } from "react-router";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { add } from "../API/userAPI";
-const AddUsers = (props) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = useForm();
-  const onSubmit = async (users) => {
+import axios from "axios";
+import { get } from "../../API/userAPI";
+export default function Edit(props) {
+  const { id } = useParams();
+  const { register, handleSubmit, reset } = useForm();
+  const [user, setUser] = useState({});
+  useEffect(() => {
+    get(id).then((response) => {
+        setUser(response.data);
+      reset(response.data);
+    });
+  }, [reset]);
+
+  const onSubmit = (data) => {
+    const user = {
+      id: id,
+      ...data
+    };
+    console.log(data)
     try {
-      const { data } = await add(users);
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
+      axios.put(
+        "http://localhost:8080/api/users/" + id,
+        data
+      );
+      alert("Sửa đổi thành công");
+    } catch (error) {}
   };
+
   return (
     <div align="center">
-      <h2 style={{ color:"#426ec7"}}>Add users</h2>
-      <br/>
     <form style={{ width: "32%" }} onSubmit={handleSubmit(onSubmit)}>
       <div>
         <div className="mb-3">
           <label htmlFor="formGroupExampleInput" className="form-label">
-            Username
+            Full name
           </label>
           <input
             type="text"
-            {...register("username", { required: true })}
             className="form-control"
+            defaultValue={user.fullname}
+            {...register("fullname")}
             id="formGroupExampleInput"
-            placeholder="Input username"
           />
-          {errors.username && <span>Field username is require</span>}
+          <br />
         </div>
         <div className="mb-3">
           <label htmlFor="formGroupExampleInput2" className="form-label">
-            Fullname
+          Email
           </label>
           <input
             type="text"
-            {...register("fullname", { required: true })}
+            defaultValue={user.email}
+            {...register("email")}
             className="form-control"
             id="formGroupExampleInput2"
-            placeholder="Input fullname"
           />
-          {errors.fullname && <span>Field fullname is require</span>}
         </div>
         <div className="mb-3">
           <label htmlFor="formGroupExampleInput2" className="form-label">
-          Password
-          </label>
-          <input
-            type="password"
-            {...register("password", { required: true })}
-            className="form-control"
-            id="formGroupExampleInput2"
-            placeholder="Input password"
-          />
-          {errors.password && <span>Field password is require</span>}
-        </div>
-        <div className="mb-3">
-          <label htmlFor="formGroupExampleInput2" className="form-label">
-            Email
+            Club
           </label>
           <input
             type="text"
-            {...register("email", { required: true })}
+            defaultValue={user.club}
+            {...register("club")}
             className="form-control"
             id="formGroupExampleInput2"
-            placeholder="Input email"
           />
-          {errors.email && <span>Field email is require</span>}
         </div>
         <div>
         <label htmlFor="formGroupExampleInput2" className="form-label">
@@ -81,14 +79,12 @@ const AddUsers = (props) => {
                 <option value={"false"} selected>User</option>
             </select>
         </div>
-        {errors.role && <span>Field role is require</span>}
         <hr></hr>
         <button type="submit" className="btn btn-outline-warning">
-          Add
+          Edit
         </button>
       </div>
     </form>
     </div>
   );
-};
-export default AddUsers;
+}

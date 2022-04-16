@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { add } from "../API/brandAPI";
+import { add } from "./../../API/brandAPI";
 const AddBrand = (props) => {
   const {
     register,
