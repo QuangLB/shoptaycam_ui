@@ -3,22 +3,20 @@ import React from "react";
 import { useState,useEffect  } from "react";
 import axios from "axios";
 import {CartContext} from "../Cart/CartService"
+import { Link } from "react-router-dom";
 export default function ProductUser(props) {
-
   const [items, setItems] = useState([]);
     useEffect(() => {axios.get('http://localhost:8080/api/product').then(resp => {
       setItems(resp.data);
   })}, []);
-  return (
-    
+  return (   
     <div className="table-responsive container">
       <h1>List Product</h1>
       <CartContext.Consumer>
                     {({ cartItems }) => (
-                      <a>Cart ({localStorage.length})</a>
+                      <Link to={"/list-card"}>Cart ({localStorage.length})</Link>
                     )}
-                  </CartContext.Consumer>
-     
+                  </CartContext.Consumer>    
       <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
         {items.map((items) => 
   <div className="card mb-4 rounded-3 shadow-sm">

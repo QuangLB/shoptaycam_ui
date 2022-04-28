@@ -1,10 +1,13 @@
 import { useParams  } from "react-router";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import { get } from "../../API/userAPI";
 export default function Edit(props) {
+  let navigate = useNavigate();
   const { id } = useParams();
+  console.log(id + "username");
   const { register, handleSubmit, reset } = useForm();
   const [user, setUser] = useState({});
   useEffect(() => {
@@ -26,6 +29,7 @@ export default function Edit(props) {
         data
       );
       alert("Sửa đổi thành công");
+      navigate('/admin/list-user');
     } catch (error) {}
   };
 
@@ -60,15 +64,17 @@ export default function Edit(props) {
         </div>
         <div className="mb-3">
           <label htmlFor="formGroupExampleInput2" className="form-label">
-            Club
+          Images
           </label>
           <input
             type="text"
-            defaultValue={user.club}
-            {...register("club")}
+            defaultValue={user.photo}
+            {...register("photo")}
             className="form-control"
             id="formGroupExampleInput2"
           />
+        </div>
+        <div className="mb-3">
         </div>
         <div>
         <label htmlFor="formGroupExampleInput2" className="form-label">

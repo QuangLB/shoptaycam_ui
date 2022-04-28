@@ -2,6 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
 import { useState,useEffect  } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 export default function Brand(props) {
   const [items, setItems] = useState([]);
   const remove = async (id) => {
@@ -40,17 +41,16 @@ export default function Brand(props) {
             <tr table-active key={items.id}>
                 <td></td>
               <td>{items.id}</td>
-              <td>
-                {items.name}
+              <td><Link to={"/detail-brand/" + items.id}>{items.name}</Link>               
               </td>
               <td>
                 <button className="btn btn-outline-danger">
                   Remove
                 </button>
               </td>
-              <td> <button className="btn btn-outline-primary">
+              <td> <Link to={"/edit-brand/" + items.id} className="btn btn-outline-primary">
                   Edit
-                </button></td>
+                </Link></td>
             </tr>
         ))}       
       </tbody>

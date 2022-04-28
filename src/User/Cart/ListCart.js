@@ -4,7 +4,7 @@ import { useState,useEffect  } from "react";
 export default function Cart(props) {
   const [items, setItems] = useState([]);
     useEffect(() => {
-      let cart = localStorage.getItem("cart2") ? JSON.parse(localStorage.getItem("cart2")) :  [];
+      let cart = localStorage.getItem("cart1") ? JSON.parse(localStorage.getItem("cart1")) :  [];
       setItems(cart)
   }, []);
   console.log(items)

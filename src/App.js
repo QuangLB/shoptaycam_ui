@@ -1,21 +1,13 @@
-import {
-  BrowserRouter as Router,
-  Routes ,
-  Route,
-  Link
-} from "react-router-dom";
-import Product from "./Admin/Product/ListProduct";
-import Header from "./component/Header";
-import AddProduct from "./Admin/Product/AddProduct";
-import DetailProduct from "./Admin/Product/DetailProduct";
+
+import Header from "./component/HeaderAdmin";
+import AppRouter from "./router";
 
 function App() {
 
   return (
     <div className="App">
     <Header />
-    {/* <Product /> */}
-    <DetailProduct />
+    <AppRouter />
       </div>
   );
 }

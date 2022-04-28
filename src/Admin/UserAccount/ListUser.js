@@ -1,16 +1,17 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
 import { useState,useEffect  } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 export default function Users(props) {
   const [items, setItems] = useState([]);
-  const remove = async (id) => {
-      console.log(id);
+  const remove = async (username) => {
+      console.log(username);
       try {
         axios.delete(
-          "http://localhost:8080/api/users/" + id
+          "http://localhost:8080/api/users/" + username
         );
-        alert("Remove success!" + id);
+        alert("Remove success!" + username);
 
         window.location.reload(true);
       } catch (error) {}
@@ -50,9 +51,9 @@ export default function Users(props) {
                   Remove
                 </button>
               </td>
-              <td> <button className="btn btn-outline-primary">
+              <td> <Link to={"/edit-users/" + items.username} className="btn btn-outline-primary">
                   Edit
-                </button></td>
+                </Link></td>
             </tr>
         ))}       
       </tbody>
